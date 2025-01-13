@@ -8,7 +8,7 @@ import {
 } from "../_components/ui/card";
 import Image from "next/image";
 import { ScrollArea } from "../_components/ui/scroll-area";
-import RedirectToProjectsButton from "./_compoments/redirect-to-projects-button";
+import RedirectToProjectsButton from "./_components/redirect-to-projects-button";
 
 const Home = () => {
   return (
