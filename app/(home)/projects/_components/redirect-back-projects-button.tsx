@@ -16,13 +16,13 @@ const RedirectBackProjectsButton = () => {
       <Button
         size="icon"
         variant="ghost"
-        className="min-h-10 min-w-10 rounded-full ring-primary hover:ring-1"
+        className="min-h-9 min-w-9 rounded-full ring-primary hover:ring-1"
         asChild
       >
         <Link href="/projects" aria-label="Voltar para Projetos">
           <FontAwesomeIcon
             icon={faCircleArrowLeft}
-            className="min-h-8 min-w-8 text-primary"
+            className="min-h-7 min-w-7 text-primary"
           />
         </Link>
       </Button>

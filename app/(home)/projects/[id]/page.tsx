@@ -18,8 +18,8 @@ interface ProjectPageProps {
 }
 
 const ProjectPage = async ({ params }: ProjectPageProps) => {
-  const project = await getProjectById(params.id);
-
+  const { id } = await params;
+  const project = await getProjectById(id);
   if (!project) throw new Error("Projeto não Encontrado!");
 
   return (
@@ -61,7 +61,7 @@ const ProjectPage = async ({ params }: ProjectPageProps) => {
           <div className="flex flex-col gap-4 lg:mx-auto lg:max-w-[600px]">
             <div className="flex flex-wrap items-center justify-center gap-3 py-3">
               {project.technologies.map((tech) => (
-                <div key={tech.id} className="flex items-center gap-1">
+                <div key={tech.name} className="flex items-center gap-1">
                   <Image
                     alt={`Logo ${tech.name}`}
                     src={tech.iconURL}
