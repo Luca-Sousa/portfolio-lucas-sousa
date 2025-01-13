@@ -11,6 +11,9 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    ignores: ["tailwind.config.ts"], // Ignora o arquivo tailwind.config.ts
+  },
 ];
 
 export default eslintConfig;

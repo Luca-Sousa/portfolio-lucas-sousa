@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import AuthProvider from "./_providers/auth";
+import "../globals.css";
+import { SidebarProvider } from "../_components/ui/sidebar";
+import { AppSidebar } from "./_components/app-sidebar";
+import AuthProvider from "../_providers/auth";
 
 export const metadata: Metadata = {
   title: "Portfólio - Lucas Sousa",
@@ -21,7 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <SidebarProvider>
+            <AppSidebar />
+            {children}
+          </SidebarProvider>
+        </AuthProvider>
       </body>
     </html>
   );

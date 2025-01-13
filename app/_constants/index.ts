@@ -1,5 +1,7 @@
 import {
   CalendarDaysIcon,
+  FolderKanbanIcon,
+  LayoutDashboardIcon,
   MailIcon,
   MapPinHouseIcon,
   SmartphoneIcon,
@@ -53,3 +55,19 @@ export const itemsNetworks = [
     icon: "/instagram.svg",
   },
 ];
+
+export const data = {
+  navMain: [
+    {
+      title: "Dashboard",
+      url: "/dashboard",
+      icon: LayoutDashboardIcon,
+      isActive: true,
+    },
+    {
+      title: "Projetos",
+      url: "/dashboard/projects",
+      icon: FolderKanbanIcon,
+    },
+  ],
+};

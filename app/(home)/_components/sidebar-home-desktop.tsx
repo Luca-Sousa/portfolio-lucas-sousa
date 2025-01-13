@@ -44,7 +44,7 @@ const SidebarHomeDesktop = () => {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button variant="ghost" size="icon" asChild>
-                    <Link href="/dasboard">
+                    <Link href="/login">
                       <Image
                         alt="Dashboard"
                         src="/dashboard.svg"
