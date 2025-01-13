@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const SidebarCardFooter = () => {
   return (
-    <CardFooter className="space-x-3 xl:flex xl:justify-center">
+    <CardFooter className="space-x-3 xl:flex xl:justify-center xl:pt-3">
       {itemsNetworks.map(({ title, link, icon }) => (
         <Button
           key={title}

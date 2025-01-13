@@ -30,7 +30,7 @@ export default function RootLayout({
             <SidebarHomeMobile />
           </div>
 
-          <div className="hidden xl:block">
+          <div className="hidden h-full xl:block">
             <SidebarHomeDesktop />
           </div>
 
