@@ -27,8 +27,8 @@ import { toast } from "sonner";
 import {
   ContactMessageSchema,
   contactMessageSchema,
-} from "@/app/_actions/contact-message/schema";
-import { createContactMessage } from "@/app/_actions/contact-message";
+} from "@/app/_actions/contact-message/create-message/schema";
+import { createContactMessage } from "@/app/_actions/contact-message/create-message";
 
 interface ContactProps {
   onSuccess: () => void;

@@ -36,13 +36,26 @@ import {
   DialogTrigger,
 } from "@/app/_components/ui/dialog";
 import { Button } from "@/app/_components/ui/button";
-import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import { signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import ContactMessageDialogContent from "./contact-message-dialog-content";
+import { useEffect, useState } from "react";
+import { ContactMessage } from "@prisma/client";
+import { getContactMessages } from "@/app/_data_access/get-contact-message";
 
 export function NavUser() {
   const { isMobile, setOpenMobile } = useSidebar();
   const { data } = useSession();
+  const [contactMessages, setContactMessages] = useState<ContactMessage[]>([]);
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      const messages = await getContactMessages();
+      setContactMessages(messages);
+    };
+
+    fetchMessages();
+  }, []);
 
   const handleSignOutWithGoogleClick = () => {
     signOut();
@@ -111,8 +124,15 @@ export function NavUser() {
                     className="cursor-pointer"
                     onClick={() => setOpenMobile(false)}
                   >
-                    <MailCheckIcon />
-                    Mensagens
+                    <span className="flex flex-1 items-center gap-2">
+                      <MailCheckIcon />
+                      Mensagens
+                    </span>
+                    {contactMessages.length > 0 && (
+                      <span className="flex size-5 items-center justify-center rounded-full bg-destructive font-bold">
+                        {contactMessages.length}
+                      </span>
+                    )}
                   </DropdownMenuItem>
                 </DialogTrigger>
               </DropdownMenuGroup>
@@ -138,7 +158,7 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuContent>
 
-            <DialogContent className="flex-grow">
+            <DialogContent className="flex h-[500px] w-[600px] flex-col overflow-hidden">
               <DialogHeader>
                 <DialogTitle>Mensagens Recebidas</DialogTitle>
                 <DialogDescription>
@@ -146,7 +166,10 @@ export function NavUser() {
                 </DialogDescription>
               </DialogHeader>
 
-              <ScrollArea>Conteúdo da Configuração da Conta</ScrollArea>
+              <ContactMessageDialogContent
+                contactMessages={contactMessages}
+                setContactMessages={setContactMessages}
+              />
             </DialogContent>
           </DropdownMenu>
         </Dialog>

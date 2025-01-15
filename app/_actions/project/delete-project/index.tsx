@@ -8,9 +8,7 @@ export const deleteProject = async ({ id }: DeleteProjectSchema) => {
   deleteProjectSchema.parse({ id });
 
   await db.project.delete({
-    where: {
-      id,
-    },
+    where: { id },
   });
 
   revalidatePath("/dashboard/projects");

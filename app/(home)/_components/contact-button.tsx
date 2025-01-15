@@ -19,7 +19,7 @@ const ContactButton = () => {
           className="flex items-center justify-center gap-1 px-3 font-semibold text-secondary"
         >
           <FontAwesomeIcon icon={faAddressBook} />
-          Contato
+          <span className="hidden min-[480px]:block">Contato</span>
         </Button>
       </SheetTrigger>
 
