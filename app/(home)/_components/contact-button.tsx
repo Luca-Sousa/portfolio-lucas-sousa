@@ -5,6 +5,7 @@ import { Sheet, SheetTrigger } from "@/app/_components/ui/sheet";
 import { faAddressBook } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import Contact from "./contact";
 
 const ContactButton = () => {
   const [sheetIsOpen, setSheetIsOpen] = useState<boolean>(false);
@@ -21,6 +22,8 @@ const ContactButton = () => {
           Contato
         </Button>
       </SheetTrigger>
+
+      <Contact onSuccess={() => setSheetIsOpen(false)} />
     </Sheet>
   );
 };
