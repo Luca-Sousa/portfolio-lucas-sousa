@@ -47,7 +47,7 @@ export const itemsNetworks = [
   },
   {
     title: "LinkedIn",
-    link: "https://www.linkedin.com/in/lucas-silva-0b79a72a7/",
+    link: "https://www.linkedin.com/in/lucas-sousa-0b79a72a7/",
     icon: faLinkedin,
   },
   {
