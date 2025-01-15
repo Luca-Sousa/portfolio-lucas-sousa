@@ -2,9 +2,7 @@
 
 import { FolderOpenDotIcon } from "lucide-react";
 import { Badge } from "../../../_components/ui/badge";
-
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { ProjectStatus, Technology } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import {
@@ -55,44 +53,28 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
           />
 
           <Badge
-            className="absolute right-2 top-2 space-x-1.5 px-1.5 py-0.5 text-xs font-medium"
+            className="absolute right-2 top-2 space-x-1.5 px-1.5 py-1 text-xs font-medium"
             variant="secondary"
           >
             {project.status === ProjectStatus.IN_PROGRESS && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="flex items-center justify-center"
-              >
+              <div className="flex animate-bounce items-center justify-center">
                 <FontAwesomeIcon icon={faFileCode} className="text-primary" />
-              </motion.div>
+              </div>
             )}
 
             {project.status === ProjectStatus.IN_PRODUCTION && (
-              <motion.div
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [1, 0.5, 1],
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="flex items-center justify-center"
-              >
+              <div className="flex animate-pulse items-center justify-center">
                 <FontAwesomeIcon icon={faStar} className="text-primary" />
-              </motion.div>
+              </div>
             )}
 
             {project.status === ProjectStatus.IN_UPDATE && (
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ repeat: Infinity, duration: 2 }}
-                className="flex items-center justify-center"
-              >
+              <div className="flex animate-spin items-center justify-center">
                 <FontAwesomeIcon
                   icon={faArrowRotateRight}
                   className="text-primary"
                 />
-              </motion.div>
+              </div>
             )}
 
             {project.status === "IN_PRODUCTION" && <span>Finalizado</span>}

@@ -21,10 +21,10 @@ import {
 
 const SidebarHomeDesktop = () => {
   return (
-    <Card className="flex h-full flex-col overflow-hidden bg-popover">
+    <Card className="flex h-full flex-col overflow-hidden bg-inherit">
       <ScrollArea>
         <CardHeader className="flex-1 items-center justify-center gap-3">
-          <div className="relative size-24 overflow-hidden rounded-full bg-popover ring-2 ring-primary xl:h-72 xl:w-48">
+          <div className="relative size-24 overflow-hidden rounded-full bg-inherit ring-2 ring-primary xl:h-72 xl:w-48">
             <Image
               alt="perfil"
               src="/perfil.png"
@@ -35,7 +35,7 @@ const SidebarHomeDesktop = () => {
 
           <CardTitle>Lucas Sousa</CardTitle>
 
-          <CardDescription className="rounded-xl bg-muted px-2 py-0.5 text-xs">
+          <CardDescription className="rounded-xl bg-muted px-2 py-0.5">
             Desenvolvedor Web
           </CardDescription>
 

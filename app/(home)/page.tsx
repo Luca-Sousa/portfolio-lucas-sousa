@@ -73,7 +73,7 @@ const Home = () => {
 
           <h3 className="text-lg font-semibold">Desenvolvendo: </h3>
 
-          <Card className="rounded-2xl text-center lg:max-w-[50%]">
+          <Card className="text-center lg:max-w-[50%]">
             <CardHeader className="flex items-center justify-center">
               <Image
                 alt="Logo Web Development"

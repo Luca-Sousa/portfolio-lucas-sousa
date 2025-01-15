@@ -17,7 +17,7 @@ const SidebarHomeMobile = () => {
   const [detailsSidebar, setDetailsSidebar] = useState<boolean>(false);
 
   return (
-    <Card className="bg-popover">
+    <Card className="bg-inherit">
       <CardHeader className="relative flex-row items-center gap-4 py-3 sm:py-4">
         <Button
           variant="outline"
