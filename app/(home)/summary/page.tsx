@@ -1,7 +1,5 @@
-import { BookOpenText, CodeSquare, SectionIcon } from "lucide-react";
-
+import { CodeSquare } from "lucide-react";
 import Link from "next/link";
-
 import {
   Card,
   CardContent,
@@ -13,8 +11,13 @@ import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faJava } from "@fortawesome/free-brands-svg-icons";
 import {
+  faAward,
   faDatabase,
   faDiagramProject,
+  faGraduationCap,
+  faLaptopCode,
+  faTimeline,
+  faUserTie,
   faWebAwesome,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -31,9 +34,10 @@ const Summary = () => {
       <ScrollArea>
         <div className="space-y-6">
           <CardContent className="space-y-4">
-            <div className="flex items-center gap-6">
-              <BookOpenText size={24} />
+            <div className="flex items-center gap-4">
+              <FontAwesomeIcon icon={faLaptopCode} />
               <h3 className="font-semibold">Educação Acadêmica</h3>
+              <FontAwesomeIcon icon={faGraduationCap} />
             </div>
 
             <div className="flex flex-col gap-4 lg:flex-row">
@@ -75,8 +79,8 @@ const Summary = () => {
                 </CardHeader>
 
                 <CardContent className="space-y-2 text-sm">
-                  <h2 className="flex items-center gap-0.5">
-                    <SectionIcon size={16} />
+                  <h2 className="flex items-center gap-1.5">
+                    <FontAwesomeIcon icon={faTimeline} />
                     Módulos:
                   </h2>
 
@@ -169,9 +173,10 @@ const Summary = () => {
           </CardContent>
 
           <CardContent className="space-y-4">
-            <div className="flex items-center gap-6">
-              <BookOpenText size={24} />
+            <div className="flex items-center gap-4">
+              <FontAwesomeIcon icon={faUserTie} />
               <h3 className="font-semibold">Experiências Profissionais</h3>
+              <FontAwesomeIcon icon={faAward} />
             </div>
 
             <Card>

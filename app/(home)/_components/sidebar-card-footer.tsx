@@ -1,7 +1,7 @@
 import { Button } from "@/app/_components/ui/button";
 import { CardFooter } from "@/app/_components/ui/card";
 import { itemsNetworks } from "@/app/_constants";
-import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
 const SidebarCardFooter = () => {
@@ -16,7 +16,10 @@ const SidebarCardFooter = () => {
           asChild
         >
           <Link href={link} target="_blank">
-            <Image src={icon} alt={"Imagem " + title} width={24} height={24} />
+            <FontAwesomeIcon
+              icon={icon}
+              className="min-h-6 min-w-6 text-muted-foreground"
+            />
           </Link>
         </Button>
       ))}

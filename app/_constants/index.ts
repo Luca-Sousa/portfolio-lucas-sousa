@@ -1,4 +1,10 @@
 import {
+  faFacebook,
+  faGithub,
+  faInstagram,
+  faLinkedin,
+} from "@fortawesome/free-brands-svg-icons";
+import {
   CalendarDaysIcon,
   FolderKanbanIcon,
   LayoutDashboardIcon,
@@ -37,22 +43,22 @@ export const itemsNetworks = [
   {
     title: "Github",
     link: "https://github.com/Luca-Sousa",
-    icon: "/github.svg",
+    icon: faGithub,
   },
   {
     title: "LinkedIn",
     link: "https://www.linkedin.com/in/lucas-silva-0b79a72a7/",
-    icon: "/linkedin.svg",
+    icon: faLinkedin,
   },
   {
     title: "Facebook",
     link: "https://www.facebook.com/LukeSousa21/",
-    icon: "/facebook.svg",
+    icon: faFacebook,
   },
   {
     title: "Instagram",
     link: "https://www.instagram.com/lk._dev/",
-    icon: "/instagram.svg",
+    icon: faInstagram,
   },
 ];
 

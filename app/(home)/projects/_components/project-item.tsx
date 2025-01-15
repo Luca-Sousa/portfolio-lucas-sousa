@@ -55,7 +55,7 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
           />
 
           <Badge
-            className="absolute right-2 top-2 max-w-fit space-x-1.5 px-1 py-px text-xs font-medium"
+            className="absolute right-2 top-2 space-x-1.5 px-1.5 py-0.5 text-xs font-medium"
             variant="secondary"
           >
             {project.status === ProjectStatus.IN_PROGRESS && (
@@ -65,10 +65,7 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
                 transition={{ duration: 2, repeat: Infinity }}
                 className="flex items-center justify-center"
               >
-                <FontAwesomeIcon
-                  icon={faFileCode}
-                  className="size-3 fill-primary text-primary"
-                />
+                <FontAwesomeIcon icon={faFileCode} className="text-primary" />
               </motion.div>
             )}
 
@@ -81,10 +78,7 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
                 transition={{ duration: 2, repeat: Infinity }}
                 className="flex items-center justify-center"
               >
-                <FontAwesomeIcon
-                  icon={faStar}
-                  className="size-3 fill-primary text-primary"
-                />
+                <FontAwesomeIcon icon={faStar} className="text-primary" />
               </motion.div>
             )}
 
@@ -96,7 +90,7 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
               >
                 <FontAwesomeIcon
                   icon={faArrowRotateRight}
-                  className="size-3 fill-primary text-primary"
+                  className="text-primary"
                 />
               </motion.div>
             )}

@@ -2,7 +2,8 @@
 
 import { Button } from "@/app/_components/ui/button";
 import { Sheet, SheetTrigger } from "@/app/_components/ui/sheet";
-import { Contact2Icon } from "lucide-react";
+import { faAddressBook } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 
 const ContactButton = () => {
@@ -16,7 +17,7 @@ const ContactButton = () => {
           variant={"default"}
           className="flex items-center justify-center gap-1 px-3 font-semibold text-secondary"
         >
-          <Contact2Icon size={22} />
+          <FontAwesomeIcon icon={faAddressBook} />
           Contato
         </Button>
       </SheetTrigger>

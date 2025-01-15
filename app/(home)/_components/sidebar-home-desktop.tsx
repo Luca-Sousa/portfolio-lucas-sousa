@@ -35,7 +35,7 @@ const SidebarHomeDesktop = () => {
 
           <CardTitle>Lucas Sousa</CardTitle>
 
-          <CardDescription className="rounded-xl bg-accent px-2 py-0.5 text-sm">
+          <CardDescription className="rounded-xl bg-muted px-2 py-0.5 text-xs">
             Desenvolvedor Web
           </CardDescription>
 
@@ -43,7 +43,12 @@ const SidebarHomeDesktop = () => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="transition-opacity hover:rounded-full"
+                    asChild
+                  >
                     <Link href="/login">
                       <Image
                         alt="Dashboard"
@@ -63,7 +68,12 @@ const SidebarHomeDesktop = () => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="transition-opacity hover:rounded-full"
+                    asChild
+                  >
                     <Link href="/Currículo - Lucas de Sousa Silva.pdf" download>
                       <Image
                         alt="Dashboard"
