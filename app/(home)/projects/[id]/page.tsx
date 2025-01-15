@@ -12,14 +12,11 @@ import RedirectBackProjectsButton from "../_components/redirect-back-projects-bu
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import CarouselImagesProject from "../_components/carousel-images";
 import { getProjectById } from "@/app/_data_access/get-project-by-id";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
-interface ProjectPageProps {
-  params: { id: string };
-}
-
-const ProjectPage = async ({ params }: ProjectPageProps) => {
-  const { id } = await params;
-  const project = await getProjectById(id);
+const ProjectPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const project = await getProjectById((await params).id);
   if (!project) throw new Error("Projeto não Encontrado!");
 
   return (
@@ -36,16 +33,16 @@ const ProjectPage = async ({ params }: ProjectPageProps) => {
               <div className="flex flex-col space-y-2 lg:flex-row lg:items-center lg:justify-between">
                 <span className="text-sm text-muted-foreground">
                   Data de Início:{" "}
-                  {/* {format(project.startDate, "d 'de' MMMM 'de' yyyy", {
+                  {format(project.startDate, "d 'de' MMMM 'de' yyyy", {
                     locale: ptBR,
-                  })} */}
+                  })}
                 </span>
 
                 <span className="text-sm text-muted-foreground">
                   Última Atualização:{" "}
-                  {/* {format(project.updatedAt, "d 'de' MMMM 'de' yyyy", {
+                  {format(project.updatedAt, "d 'de' MMMM 'de' yyyy", {
                     locale: ptBR,
-                  })} */}
+                  })}
                 </span>
               </div>
             </>
@@ -60,8 +57,8 @@ const ProjectPage = async ({ params }: ProjectPageProps) => {
 
           <div className="flex flex-col gap-4 lg:mx-auto lg:max-w-[600px]">
             <div className="flex flex-wrap items-center justify-center gap-3 py-3">
-              {project.technologies.map((tech) => (
-                <div key={tech.name} className="flex items-center gap-1">
+              {project.technologies.map((tech, index) => (
+                <div key={index} className="flex items-center gap-1">
                   <Image
                     alt={`Logo ${tech.name}`}
                     src={tech.iconURL}
