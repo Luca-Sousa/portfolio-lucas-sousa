@@ -31,7 +31,12 @@ import {
 import { useState } from "react";
 import { Project } from "@/app/_types/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRocket } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRotateRight,
+  faFileCode,
+  faRocket,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import UpsertProductDialogContent from "./upsert-dialog-content";
 
@@ -77,11 +82,11 @@ export const projectsTableColumns: ColumnDef<Project>[] = [
       );
     },
   },
-  {
-    accessorKey: "imagesUrl",
-    header: "qtDE",
-    cell: ({ row: { original: project } }) => project.imagesUrl.length,
-  },
+  // {
+  //   accessorKey: "imagesUrl",
+  //   header: "qtDE",
+  //   cell: ({ row: { original: project } }) => project.imagesUrl.length,
+  // },
   {
     accessorKey: "title",
     header: "Projeto",
@@ -114,8 +119,8 @@ export const projectsTableColumns: ColumnDef<Project>[] = [
     cell: ({ row: { original: project } }) =>
       new Date(project.startDate).toLocaleDateString("pt-BR", {
         day: "2-digit",
-        month: "short",
-        year: "2-digit",
+        month: "long",
+        year: "numeric",
       }),
   },
   {
@@ -133,9 +138,26 @@ export const projectsTableColumns: ColumnDef<Project>[] = [
     },
     cell: ({ row: { original: project } }) => {
       return (
-        <Badge className="text-secondary">
-          {project.status.toString().replace(/_/g, " ")}
-        </Badge>
+        <div>
+          {project.status === "IN_PRODUCTION" && (
+            <Badge className="flex w-fit items-center justify-center gap-1 bg-green-500 font-bold text-secondary hover:bg-green-400">
+              <FontAwesomeIcon icon={faStar} />
+              Finalizado
+            </Badge>
+          )}
+          {project.status === "IN_UPDATE" && (
+            <Badge className="flex w-fit items-center justify-center gap-1 bg-slate-500 font-bold text-secondary hover:bg-gray-400">
+              <FontAwesomeIcon icon={faArrowRotateRight} />
+              Atualização
+            </Badge>
+          )}
+          {project.status === "IN_PROGRESS" && (
+            <Badge className="flex w-fit items-center justify-center gap-1 bg-yellow-500 font-bold text-secondary hover:bg-yellow-400">
+              <FontAwesomeIcon icon={faFileCode} />
+              Desenvolvimento
+            </Badge>
+          )}
+        </div>
       );
     },
   },
@@ -175,20 +197,20 @@ export const projectsTableColumns: ColumnDef<Project>[] = [
       );
     },
   },
-  {
-    accessorKey: "certificateDesc",
-    header: "Desc. Certificado",
-    cell: ({ row: { original: project } }) => {
-      if (!project.certificateDesc) return;
-      return (
-        <div className="truncate text-sm">
-          {project.certificateDesc.length > 20
-            ? `${project.certificateDesc.slice(0, 20)}...`
-            : project.description}
-        </div>
-      );
-    },
-  },
+  // {
+  //   accessorKey: "certificateDesc",
+  //   header: "Desc. Certificado",
+  //   cell: ({ row: { original: project } }) => {
+  //     if (!project.certificateDesc) return;
+  //     return (
+  //       <div className="truncate text-sm">
+  //         {project.certificateDesc.length > 20
+  //           ? `${project.certificateDesc.slice(0, 20)}...`
+  //           : project.description}
+  //       </div>
+  //     );
+  //   },
+  // },
   {
     accessorKey: "deployUrl",
     header: "Deploy",
