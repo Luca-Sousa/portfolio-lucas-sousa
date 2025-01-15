@@ -4,6 +4,8 @@ import "../globals.css";
 import { SidebarProvider } from "../_components/ui/sidebar";
 import { AppSidebar } from "./_components/app-sidebar";
 import AuthProvider from "../_providers/auth";
+import { EdgeStoreProvider } from "../_lib/edgestore";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Portfólio - Lucas Sousa",
@@ -22,13 +24,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${inter.className} overflow-hidden antialiased`}>
         <AuthProvider>
-          <SidebarProvider>
-            <AppSidebar />
-            {children}
-          </SidebarProvider>
+          <EdgeStoreProvider>
+            <SidebarProvider>
+              <AppSidebar />
+              {children}
+            </SidebarProvider>
+          </EdgeStoreProvider>
         </AuthProvider>
+        <Toaster />
       </body>
     </html>
   );
