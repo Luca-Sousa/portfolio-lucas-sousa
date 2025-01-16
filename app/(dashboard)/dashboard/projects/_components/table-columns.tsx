@@ -82,11 +82,6 @@ export const projectsTableColumns: ColumnDef<Project>[] = [
       );
     },
   },
-  // {
-  //   accessorKey: "imagesUrl",
-  //   header: "qtDE",
-  //   cell: ({ row: { original: project } }) => project.imagesUrl.length,
-  // },
   {
     accessorKey: "title",
     header: "Projeto",
@@ -180,37 +175,6 @@ export const projectsTableColumns: ColumnDef<Project>[] = [
       );
     },
   },
-  {
-    accessorKey: "certificateUrl",
-    header: "Certificado",
-    cell: ({ row: { original: project } }) => {
-      if (!project.certificateUrl) return;
-      return (
-        <div className="relative size-12 overflow-hidden rounded-md">
-          <Image
-            alt="Imagem do projeto"
-            src={project.certificateUrl}
-            fill
-            className="object-cover"
-          />
-        </div>
-      );
-    },
-  },
-  // {
-  //   accessorKey: "certificateDesc",
-  //   header: "Desc. Certificado",
-  //   cell: ({ row: { original: project } }) => {
-  //     if (!project.certificateDesc) return;
-  //     return (
-  //       <div className="truncate text-sm">
-  //         {project.certificateDesc.length > 20
-  //           ? `${project.certificateDesc.slice(0, 20)}...`
-  //           : project.description}
-  //       </div>
-  //     );
-  //   },
-  // },
   {
     accessorKey: "deployUrl",
     header: "Deploy",
@@ -315,6 +279,7 @@ export const projectsTableColumns: ColumnDef<Project>[] = [
               productId={project.id}
               thumbnailUrl={project.thumbnailUrl}
               imagesUrl={project.imagesUrl}
+              certificateUrl={project.certificateUrl}
             />
           </Dialog>
         </AlertDialog>

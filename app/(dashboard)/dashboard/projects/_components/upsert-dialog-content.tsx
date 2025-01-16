@@ -22,7 +22,6 @@ import {
   FormControl,
   FormMessage,
   Form,
-  FormDescription,
 } from "@/app/_components/ui/form";
 import { Input } from "@/app/_components/ui/input";
 import {
@@ -39,7 +38,7 @@ import { getTechnologies } from "@/app/_data_access/get-technologies";
 import { useEdgeStore } from "@/app/_lib/edgestore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProjectStatus, Technology } from "@prisma/client";
-import { Loader2Icon, FilePlus2, FileIcon, Trash2Icon } from "lucide-react";
+import { Loader2Icon, FilePlus2 } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -47,9 +46,9 @@ import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import { SingleImageDropzone } from "./single-image-dropzone";
 import { Calendar } from "@/app/_components/ui/calendar";
 import { MultiFileDropzoneUsage } from "./MultiFileDropzoneUsage";
-import Link from "next/link";
 import { toast } from "sonner";
 import { ptBR } from "date-fns/locale";
+import { SingleFilePDFDropzone } from "./single-file-pdf-dropzone";
 
 interface UpsertProductDialogContentProps {
   defaultValues?: UpsertProjectSchema;
@@ -67,7 +66,6 @@ const UpsertProductDialogContent = ({
   const [status, setStatus] = useState<ProjectStatus[]>([]);
 
   const form = useForm({
-    shouldUnregister: true,
     resolver: zodResolver(upsertProjectSchema),
     defaultValues: defaultValues ?? {
       title: "",
@@ -155,17 +153,34 @@ const UpsertProductDialogContent = ({
     }
   };
 
-  const handleSubmitProject = async (data: UpsertProjectSchema) => {
-    try {
-      await edgestore.publicFiles.confirmUpload({
-        url: data.thumbnailUrl,
+  const handleFilePDFChange = async (file: File | null) => {
+    if (file) {
+      const res = await edgestore.publicFiles.upload({
+        file,
+        options: {
+          temporary: true,
+        },
       });
 
-      for (const image of data.imagesUrl) {
-        await edgestore.publicFiles.confirmUpload({
-          url: image,
-        });
-      }
+      form.setValue("certificateUrl", res.url);
+    } else {
+      form.setValue("certificateUrl", "");
+    }
+  };
+
+  const handleSubmitProject = async (data: UpsertProjectSchema) => {
+    try {
+      const confirmUploads = [
+        edgestore.publicImages.confirmUpload({ url: data.thumbnailUrl }),
+        data.certificateUrl
+          ? edgestore.publicFiles.confirmUpload({ url: data.certificateUrl })
+          : null,
+        ...data.imagesUrl.map((image) =>
+          edgestore.publicImages.confirmUpload({ url: image }),
+        ),
+      ];
+      // Esperar todos os uploads serem confirmados
+      await Promise.all(confirmUploads.filter(Boolean));
 
       await upsertProject({
         ...data,
@@ -198,7 +213,7 @@ const UpsertProductDialogContent = ({
           className="flex h-full flex-col justify-between space-y-2 overflow-hidden"
         >
           <div className="flex h-full justify-between overflow-hidden">
-            <div className="flex h-full w-[360px] flex-col overflow-hidden">
+            <div className="mr-2 flex h-full w-[364px] flex-col overflow-hidden">
               <ScrollArea>
                 <div className="space-y-4 pb-2">
                   <FormField
@@ -229,62 +244,34 @@ const UpsertProductDialogContent = ({
                       <FormItem>
                         <FormLabel>Imagens do Projeto</FormLabel>
                         <FormControl>
-                          {!isEditing ? (
-                            <MultiFileDropzoneUsage
-                              value={field.value}
-                              onChange={(urls) => field.onChange(urls)}
-                            />
-                          ) : (
-                            <div className="max-w-[350px] space-y-3">
-                              {form
-                                .getValues("imagesUrl")
-                                .map((imageUrl, index) => (
-                                  <div
-                                    key={index}
-                                    className="flex h-16 w-full flex-col justify-center rounded border border-gray-300 px-4 py-2"
-                                  >
-                                    <div className="flex items-center gap-2 text-gray-500 dark:text-white">
-                                      <FileIcon
-                                        size="30"
-                                        className="shrink-0"
-                                      />
-                                      <div className="min-w-0 text-sm">
-                                        <div className="overflow-hidden overflow-ellipsis whitespace-nowrap">
-                                          <Link
-                                            href={imageUrl}
-                                            className="text-primary hover:underline"
-                                            target="_blank"
-                                          >
-                                            {imageUrl}
-                                          </Link>
-                                        </div>
-                                      </div>
+                          <MultiFileDropzoneUsage
+                            value={field.value}
+                            onChange={(urls) => field.onChange(urls)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                                      <div className="grow" />
-
-                                      <div className="flex w-12 justify-end text-xs">
-                                        <Button
-                                          disabled
-                                          variant="secondary"
-                                          size="icon"
-                                          type="button"
-                                          className="rounded-md p-1 transition-colors duration-200"
-                                          onClick={() => {
-                                            const updatedUrls =
-                                              field.value.filter(
-                                                (_, i) => i !== index,
-                                              );
-                                            field.onChange(updatedUrls);
-                                          }}
-                                        >
-                                          <Trash2Icon className="shrink-0" />
-                                        </Button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                ))}
-                            </div>
-                          )}
+                  <FormField
+                    control={form.control}
+                    name="certificateUrl"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          Link do Certificado{" "}
+                          <span className="text-xs text-muted-foreground">
+                            (opcional)
+                          </span>
+                        </FormLabel>
+                        <FormControl>
+                          <SingleFilePDFDropzone
+                            value={field.value}
+                            onChange={(file) =>
+                              handleFilePDFChange(file as File | null)
+                            }
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -359,7 +346,7 @@ const UpsertProductDialogContent = ({
                     name="description"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Descrição</FormLabel>
+                        <FormLabel>Descrição - Projeto</FormLabel>
                         <FormControl>
                           <Textarea
                             {...field}
@@ -372,7 +359,25 @@ const UpsertProductDialogContent = ({
                     )}
                   />
 
-                  <div className="flex">
+                  <FormField
+                    control={form.control}
+                    name="certificateDesc"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Descrição - Certificado</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            {...field}
+                            placeholder="Descrição do Certificado..."
+                            className="min-h-32 resize-none"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="flex gap-4">
                     <FormField
                       control={form.control}
                       name="startDate"
@@ -381,6 +386,7 @@ const UpsertProductDialogContent = ({
                           <FormLabel>Data de Início</FormLabel>
                           <FormControl>
                             <Calendar
+                              className="rounded-lg border border-input"
                               classNames={{
                                 day_selected:
                                   "bg-primary font-semibold hover:font-semibold focus:font-semibold text-muted hover:bg-primary hover:text-muted focus:bg-primary focus:text-muted",
@@ -402,19 +408,13 @@ const UpsertProductDialogContent = ({
                       )}
                     />
 
-                    <div className="flex-1 space-y-3">
+                    <div className="flex flex-1 flex-col justify-between">
                       <FormField
                         control={form.control}
                         name="technologies"
                         render={() => (
-                          <FormItem className="w-full max-w-md">
-                            <div className="mb-4">
-                              <FormLabel>Tecnologias</FormLabel>
-                              <FormDescription>
-                                Selecione as tecnologias do projeto.
-                              </FormDescription>
-                            </div>
-
+                          <FormItem>
+                            <FormLabel>Tecnologias</FormLabel>
                             <div className="flex flex-wrap gap-4">
                               {technologies.map((tech) => (
                                 <FormField
@@ -446,12 +446,12 @@ const UpsertProductDialogContent = ({
                                               }}
                                             />
                                           </FormControl>
-                                          <FormLabel className="flex items-center gap-2">
+                                          <FormLabel className="flex items-center gap-1 text-xs">
                                             <Image
                                               alt={tech.name}
                                               src={tech.iconURL}
-                                              width={18}
-                                              height={18}
+                                              width={16}
+                                              height={16}
                                             />
                                             {tech.name}
                                           </FormLabel>

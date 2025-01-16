@@ -16,28 +16,20 @@ body {
   :root {
     --background: 225 9% 9%;
     --foreground: 210 40% 98%;
-
     --card: 228 9% 11%;
     --card-foreground: 210 40% 98%;
-
     --popover: 228 9% 11%;
     --popover-foreground: 210 40% 98%;
-
     --primary: 148 74% 64%;
     --primary-foreground: 0 0% 100%;
-
     --secondary: 228 6% 16%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 228 6% 16%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 228 6% 16%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 228 6% 16%;
     --input: 228 6% 16%;
     --ring: 212.7 26.8% 83.9%;
@@ -81,13 +73,19 @@ body {
   body {
     @apply h-full bg-background text-foreground;
   }
-}
 
-@layer base {
-  * {
-    @apply border-border;
+  /* width */
+  ::-webkit-scrollbar {
+    @apply h-1 w-1.5;
   }
-  body {
-    @apply bg-background text-foreground;
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    @apply rounded-md bg-background;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-md bg-muted-foreground/25;
   }
 }

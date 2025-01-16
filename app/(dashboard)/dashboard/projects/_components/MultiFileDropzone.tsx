@@ -1,14 +1,7 @@
 "use client";
 
 import { formatFileSize } from "@edgestore/react/utils";
-import {
-  CheckCircleIcon,
-  FileIcon,
-  LucideFileWarning,
-  Trash2Icon,
-  UploadCloudIcon,
-  XIcon,
-} from "lucide-react";
+import { UploadCloudIcon } from "lucide-react";
 import * as React from "react";
 import { useDropzone, type DropzoneOptions } from "react-dropzone";
 import { twMerge } from "tailwind-merge";
@@ -161,7 +154,7 @@ const MultiFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
           </div>
 
           {/* Selected Files */}
-          {value?.map(({ file, abortController, progress }, i) => (
+          {/* {value?.map(({ file, abortController, progress }, i) => (
             <div
               key={i}
               className="flex h-16 w-full flex-col justify-center rounded border border-gray-300 px-4 py-2"
@@ -215,7 +208,8 @@ const MultiFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
                   )}
                 </div>
               </div>
-              {/* Progress Bar */}
+
+              // Progress Bar 
               {typeof progress === "number" && (
                 <div className="relative h-0">
                   <div className="absolute top-1 h-1 w-full overflow-clip rounded-full bg-gray-200 dark:bg-gray-700">
@@ -229,7 +223,7 @@ const MultiFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
                 </div>
               )}
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
     );

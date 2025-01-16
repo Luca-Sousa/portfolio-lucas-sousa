@@ -19,12 +19,14 @@ interface DeleteProjectDialogContentProps {
   productId: string;
   thumbnailUrl: string;
   imagesUrl: string[];
+  certificateUrl?: string;
 }
 
 const DeleteProjectDialogContent = ({
   productId,
   thumbnailUrl,
   imagesUrl,
+  certificateUrl,
 }: DeleteProjectDialogContentProps) => {
   const { edgestore } = useEdgeStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,15 +35,17 @@ const DeleteProjectDialogContent = ({
     setIsSubmitting(true);
 
     try {
-      await edgestore.publicFiles.delete({
-        url: thumbnailUrl,
-      });
-
-      for (const image of imagesUrl) {
-        await edgestore.publicFiles.delete({
-          url: image,
-        });
-      }
+      const deleteUploads = [
+        edgestore.publicImages.delete({ url: thumbnailUrl }),
+        certificateUrl
+          ? edgestore.publicFiles.delete({ url: certificateUrl })
+          : null,
+        ...imagesUrl.map((image) =>
+          edgestore.publicImages.delete({ url: image }),
+        ),
+      ];
+      // Esperar todos os deletes serem confirmados
+      await Promise.all(deleteUploads.filter(Boolean));
 
       await deleteProject({ id: productId });
 

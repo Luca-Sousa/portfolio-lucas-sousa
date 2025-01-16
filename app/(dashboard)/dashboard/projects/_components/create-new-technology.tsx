@@ -39,7 +39,6 @@ const ModalCreateNewTechnology = () => {
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
 
   const form = useForm({
-    shouldUnregister: true,
     resolver: zodResolver(createTechnologySchema),
     defaultValues: {
       name: "",

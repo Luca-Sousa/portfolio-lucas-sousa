@@ -3,6 +3,9 @@
 import { useEdgeStore } from "@/app/_lib/edgestore";
 import { useState } from "react";
 import { FileState, MultiFileDropzone } from "./MultiFileDropzone";
+import { FileIcon, Trash2Icon } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/app/_components/ui/button";
 
 interface MultiFileDropzoneUsageProps {
   value: string[];
@@ -14,6 +17,7 @@ export function MultiFileDropzoneUsage({
   onChange,
 }: MultiFileDropzoneUsageProps) {
   const [fileStates, setFileStates] = useState<FileState[]>([]);
+  const uploadedUrls: string[] = [];
   const { edgestore } = useEdgeStore();
 
   function updateFileProgress(key: string, progress: FileState["progress"]) {
@@ -37,7 +41,6 @@ export function MultiFileDropzoneUsage({
           setFileStates(files);
         }}
         onFilesAdded={async (addedFiles) => {
-          const uploadedUrls: string[] = [];
           setFileStates([...fileStates, ...addedFiles]);
 
           await Promise.all(
@@ -68,6 +71,57 @@ export function MultiFileDropzoneUsage({
           onChange([...value, ...uploadedUrls]);
         }}
       />
+
+      <div className="max-w-[350px] space-y-3">
+        {value.map((imageUrl, index) => (
+          <div
+            key={index}
+            className="flex h-16 w-full flex-col justify-center rounded border border-gray-300 px-4 py-2"
+          >
+            <div className="flex items-center gap-2 text-gray-500 dark:text-white">
+              <FileIcon size="30" className="shrink-0" />
+              <div className="min-w-0 text-sm">
+                <div className="overflow-hidden overflow-ellipsis whitespace-nowrap">
+                  <Link
+                    href={imageUrl}
+                    className="text-primary hover:underline"
+                    target="_blank"
+                  >
+                    {imageUrl}
+                  </Link>
+                </div>
+              </div>
+
+              <div className="grow" />
+
+              <div className="flex w-12 justify-end text-xs">
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  type="button"
+                  className="rounded-md p-1 transition-colors duration-200"
+                  onClick={async (e) => {
+                    e.stopPropagation();
+                    try {
+                      // Deleta a imagem do bucket
+                      await edgestore.publicFiles.delete({
+                        url: imageUrl,
+                      });
+
+                      const updatedUrls = value.filter((_, i) => i !== index);
+                      onChange([...updatedUrls]);
+                    } catch (error) {
+                      console.error("Erro ao remover a imagem:", error);
+                    }
+                  }}
+                >
+                  <Trash2Icon className="shrink-0" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
