@@ -58,7 +58,6 @@ const SingleImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
 
     React.useEffect(() => {
       setLocalValue(value); // Sincronizar o estado local com o valor externo
-      console.log(value);
     }, [value]);
 
     const imageUrl = React.useMemo(() => {
@@ -181,7 +180,6 @@ const SingleImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
                   await edgestore.publicFiles.delete({
                     url: imageUrl,
                   });
-                  console.log("Imagem removida com sucesso");
 
                   setLocalValue(undefined); // Atualiza o estado local
                   void onChange?.(undefined); // Propaga para o componente pai

@@ -39,13 +39,7 @@ import { getTechnologies } from "@/app/_data_access/get-technologies";
 import { useEdgeStore } from "@/app/_lib/edgestore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProjectStatus, Technology } from "@prisma/client";
-import {
-  PanelLeftCloseIcon,
-  Loader2Icon,
-  FilePlus2,
-  FileIcon,
-  Trash2Icon,
-} from "lucide-react";
+import { Loader2Icon, FilePlus2, FileIcon, Trash2Icon } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -55,6 +49,7 @@ import { Calendar } from "@/app/_components/ui/calendar";
 import { MultiFileDropzoneUsage } from "./MultiFileDropzoneUsage";
 import Link from "next/link";
 import { toast } from "sonner";
+import { ptBR } from "date-fns/locale";
 
 interface UpsertProductDialogContentProps {
   defaultValues?: UpsertProjectSchema;
@@ -386,6 +381,10 @@ const UpsertProductDialogContent = ({
                           <FormLabel>Data de Início</FormLabel>
                           <FormControl>
                             <Calendar
+                              classNames={{
+                                day_selected:
+                                  "bg-primary font-semibold hover:font-semibold focus:font-semibold text-muted hover:bg-primary hover:text-muted focus:bg-primary focus:text-muted",
+                              }}
                               mode="single"
                               selected={field.value}
                               onSelect={field.onChange}
@@ -394,6 +393,8 @@ const UpsertProductDialogContent = ({
                                 date < new Date("1900-01-01")
                               }
                               initialFocus
+                              defaultMonth={field.value}
+                              locale={ptBR}
                             />
                           </FormControl>
                           <FormMessage />
@@ -512,7 +513,6 @@ const UpsertProductDialogContent = ({
                   variant={"secondary"}
                   className="gap-1.5"
                 >
-                  <PanelLeftCloseIcon size={18} />
                   Cancelar
                 </Button>
               </DialogClose>
@@ -520,7 +520,7 @@ const UpsertProductDialogContent = ({
               <Button
                 disabled={form.formState.isSubmitting}
                 type="submit"
-                className="gap-1.5 text-secondary"
+                className="gap-1.5 font-semibold text-secondary"
               >
                 {form.formState.isSubmitting ? (
                   <Loader2Icon className="animate-spin" size={16} />

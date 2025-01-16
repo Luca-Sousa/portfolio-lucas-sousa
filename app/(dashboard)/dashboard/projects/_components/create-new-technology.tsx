@@ -32,9 +32,11 @@ import {
   createTechnologySchema,
 } from "@/app/_actions/technology/create-technology/schema";
 import { SingleImageDropzone } from "./single-image-dropzone";
+import { useState } from "react";
 
 const ModalCreateNewTechnology = () => {
   const { edgestore } = useEdgeStore();
+  const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
 
   const form = useForm({
     shouldUnregister: true,
@@ -71,6 +73,7 @@ const ModalCreateNewTechnology = () => {
         iconURL: data.iconURL,
       });
 
+      setDialogIsOpen(false);
       toast.success("Tecnologia criada com sucesso!");
     } catch (error) {
       toast.error("Erro ao criar a tecnologia! " + error);
@@ -78,7 +81,7 @@ const ModalCreateNewTechnology = () => {
   };
 
   return (
-    <Dialog>
+    <Dialog open={dialogIsOpen} onOpenChange={(open) => setDialogIsOpen(open)}>
       <DialogTrigger asChild>
         <Button className="flex h-8 items-center gap-2 font-medium text-secondary">
           <CirclePlusIcon size={16} />

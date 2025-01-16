@@ -1,3 +1,5 @@
+"use client";
+
 import { deleteProject } from "@/app/_actions/project/delete-project";
 import {
   AlertDialogAction,
@@ -9,32 +11,45 @@ import {
   AlertDialogTitle,
 } from "@/app/_components/ui/alert-dialog";
 import { useEdgeStore } from "@/app/_lib/edgestore";
-import { SquareXIcon, StepForwardIcon } from "lucide-react";
+import { Loader2Icon, StepForwardIcon } from "lucide-react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 interface DeleteProjectDialogContentProps {
   productId: string;
-  imageURL: string;
+  thumbnailUrl: string;
+  imagesUrl: string[];
 }
 
 const DeleteProjectDialogContent = ({
   productId,
-  imageURL,
+  thumbnailUrl,
+  imagesUrl,
 }: DeleteProjectDialogContentProps) => {
   const { edgestore } = useEdgeStore();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleContinueClick = async () => {
-    try {
-      await deleteProject({ id: productId });
+    setIsSubmitting(true);
 
+    try {
       await edgestore.publicFiles.delete({
-        url: imageURL,
+        url: thumbnailUrl,
       });
 
+      for (const image of imagesUrl) {
+        await edgestore.publicFiles.delete({
+          url: image,
+        });
+      }
+
+      await deleteProject({ id: productId });
+
       toast.success("Projeto excluído com sucesso!");
-    } catch (error) {
-      console.error(error);
+    } catch {
       toast.error("Erro ao excluir Projeto!");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -49,15 +64,19 @@ const DeleteProjectDialogContent = ({
       </AlertDialogHeader>
 
       <AlertDialogFooter>
-        <AlertDialogCancel className="gap-1.5">
-          <SquareXIcon size={16} />
+        <AlertDialogCancel className="gap-1.5" disabled={isSubmitting}>
           Cancelar
         </AlertDialogCancel>
         <AlertDialogAction
-          className="gap-1.5 text-secondary"
+          className="gap-1.5 bg-destructive/60 hover:bg-destructive/45"
           onClick={handleContinueClick}
+          disabled={isSubmitting}
         >
-          <StepForwardIcon size={16} />
+          {isSubmitting ? (
+            <Loader2Icon className="animate-spin" size={16} />
+          ) : (
+            <StepForwardIcon size={16} />
+          )}
           Continuar
         </AlertDialogAction>
       </AlertDialogFooter>

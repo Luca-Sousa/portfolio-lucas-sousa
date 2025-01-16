@@ -211,7 +211,7 @@ const MultiFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
                       <div>{Math.round(progress)}%</div>
                     </div>
                   ) : (
-                    <CheckCircleIcon className="shrink-0 text-green-600 dark:text-gray-400" />
+                    <CheckCircleIcon className="shrink-0 text-primary dark:text-muted-foreground" />
                   )}
                 </div>
               </div>

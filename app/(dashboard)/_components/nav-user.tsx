@@ -148,7 +148,7 @@ export function NavUser() {
 
               <DropdownMenuItem asChild>
                 <Button
-                  className="w-full cursor-pointer justify-start bg-destructive/70 focus:bg-destructive focus-visible:ring-0"
+                  className="w-full cursor-pointer justify-start bg-destructive/60 focus:bg-destructive/45 focus-visible:ring-0"
                   variant="destructive"
                   onClick={handleSignOutWithGoogleClick}
                 >

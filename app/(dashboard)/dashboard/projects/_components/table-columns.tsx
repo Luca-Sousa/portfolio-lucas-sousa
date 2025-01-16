@@ -8,7 +8,7 @@ import {
   ClipboardCopyIcon,
   EditIcon,
   MoreHorizontalIcon,
-  TrashIcon,
+  Trash2Icon,
 } from "lucide-react";
 import { Badge } from "@/app/_components/ui/badge";
 import Link from "next/link";
@@ -261,23 +261,32 @@ export const projectsTableColumns: ColumnDef<Project>[] = [
               </DropdownMenuTrigger>
 
               <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem onClick={copyID} className="gap-1.5">
-                  <ClipboardCopyIcon size={16} />
-                  Copiar ID
-                </DropdownMenuItem>
+                <DropdownMenuLabel className="text-center">
+                  Actions
+                </DropdownMenuLabel>
                 <DropdownMenuSeparator />
 
-                <DialogTrigger asChild>
-                  <DropdownMenuItem className="gap-1.5">
-                    <EditIcon size={16} />
-                    Editar
+                <div className="space-y-1">
+                  <DropdownMenuItem
+                    onClick={copyID}
+                    className="cursor-pointer gap-1.5"
+                  >
+                    <ClipboardCopyIcon size={14} />
+                    Copiar ID
                   </DropdownMenuItem>
-                </DialogTrigger>
 
+                  <DialogTrigger asChild>
+                    <DropdownMenuItem className="cursor-pointer gap-1.5">
+                      <EditIcon size={14} />
+                      Editar
+                    </DropdownMenuItem>
+                  </DialogTrigger>
+                </div>
+
+                <DropdownMenuSeparator />
                 <AlertDialogTrigger asChild>
-                  <DropdownMenuItem className="gap-1.5">
-                    <TrashIcon size={16} />
+                  <DropdownMenuItem className="cursor-pointer gap-1.5 bg-destructive/60 focus:bg-destructive/45">
+                    <Trash2Icon size={14} />
                     Deletar
                   </DropdownMenuItem>
                 </AlertDialogTrigger>
@@ -304,7 +313,8 @@ export const projectsTableColumns: ColumnDef<Project>[] = [
 
             <DeleteProjectDialogContent
               productId={project.id}
-              imageURL={project.imagesUrl[0]}
+              thumbnailUrl={project.thumbnailUrl}
+              imagesUrl={project.imagesUrl}
             />
           </Dialog>
         </AlertDialog>

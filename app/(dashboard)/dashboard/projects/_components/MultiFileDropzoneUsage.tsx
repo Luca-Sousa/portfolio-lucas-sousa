@@ -59,9 +59,7 @@ export function MultiFileDropzoneUsage({
                   },
                 });
 
-                console.log(res);
                 uploadedUrls.push(res.url);
-                console.log(uploadedUrls);
               } catch {
                 updateFileProgress(addedFileState.key, "ERROR");
               }
