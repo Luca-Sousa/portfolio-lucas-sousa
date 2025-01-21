@@ -15,6 +15,8 @@ import { getProjectById } from "@/app/_data_access/get-project-by-id";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Separator } from "@/app/_components/ui/separator";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCertificate } from "@fortawesome/free-solid-svg-icons";
 
 const ProjectPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const project = await getProjectById((await params).id);
@@ -55,7 +57,7 @@ const ProjectPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             className="prose min-w-full prose-a:text-muted-foreground hover:prose-a:text-primary"
           />
 
-          <Separator />
+          <Separator className="my-4" />
         </CardHeader>
 
         <CardContent className="gap-4">
@@ -110,6 +112,23 @@ const ProjectPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               </Button>
             </div>
           </div>
+
+          <Separator className="my-6" />
+
+          {project.certificateUrl && project.certificateDesc && (
+            <div className="flex flex-col items-center justify-center gap-4 xl:flex-row">
+              <Button variant={"secondary"} asChild className="font-semibold">
+                <Link href={project.certificateUrl} target="_blank">
+                  <FontAwesomeIcon icon={faCertificate} />
+                  Visualizar Certificado
+                </Link>
+              </Button>
+
+              <CardDescription className="max-w-lg text-center">
+                {project.certificateDesc}
+              </CardDescription>
+            </div>
+          )}
         </CardContent>
       </ScrollArea>
     </>
