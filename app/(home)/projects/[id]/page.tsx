@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/_components/ui/card";
-import { ArrowRight, FolderGit2Icon, RocketIcon } from "lucide-react";
+import { ChevronsRightIcon, FolderGit2Icon, RocketIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import RedirectBackProjectsButton from "../_components/redirect-back-projects-button";
@@ -14,6 +14,7 @@ import CarouselImagesProject from "../_components/carousel-images";
 import { getProjectById } from "@/app/_data_access/get-project-by-id";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { Separator } from "@/app/_components/ui/separator";
 
 const ProjectPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const project = await getProjectById((await params).id);
@@ -49,10 +50,15 @@ const ProjectPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             <div className="h-1 w-8 rounded-3xl bg-primary sm:h-2"></div>
           </div>
 
-          <CardDescription>{project.description}</CardDescription>
+          <CardDescription
+            dangerouslySetInnerHTML={{ __html: project.description }}
+            className="prose min-w-full prose-a:text-muted-foreground hover:prose-a:text-primary"
+          />
+
+          <Separator />
         </CardHeader>
 
-        <CardContent className="gap-4 2xl:flex">
+        <CardContent className="gap-4">
           <CarouselImagesProject project={project.imagesUrl} />
 
           <div className="flex flex-col gap-4 lg:mx-auto lg:max-w-[600px]">
@@ -81,8 +87,8 @@ const ProjectPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                     <FolderGit2Icon size={20} />
                     Repositório
                   </div>
-                  <div className="flex h-full w-10 items-center justify-center bg-orange-400 lg:w-14">
-                    <ArrowRight />
+                  <div className="flex h-full w-10 items-center justify-center bg-orange-400 lg:w-16">
+                    <ChevronsRightIcon className="!size-5 lg:!size-6" />
                   </div>
                 </Link>
               </Button>
@@ -98,7 +104,7 @@ const ProjectPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                     Deploy
                   </div>
                   <div className="flex h-full w-10 items-center justify-center bg-orange-400 lg:w-14">
-                    <ArrowRight />
+                    <ChevronsRightIcon className="!size-5 lg:!size-6" />
                   </div>
                 </Link>
               </Button>

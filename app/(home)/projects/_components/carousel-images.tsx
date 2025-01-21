@@ -40,7 +40,7 @@ const CarouselImagesProject = ({ project }: CarouselImagesProjectProps) => {
   );
 
   return (
-    <div className="mx-auto w-full max-w-3xl 2xl:mx-0">
+    <div className="mx-auto w-full max-w-3xl">
       <Carousel
         plugins={[plugin.current]}
         className="w-full max-w-3xl"
@@ -64,8 +64,8 @@ const CarouselImagesProject = ({ project }: CarouselImagesProjectProps) => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="left-3 hidden size-9 text-primary ring-2 ring-primary hover:scale-110 lg:flex" />
-        <CarouselNext className="right-3 hidden size-9 text-primary ring-2 ring-primary hover:scale-110 lg:flex" />
+        <CarouselPrevious className="left-3 hidden size-9 text-primary ring-2 ring-primary hover:scale-110 lg:flex 2xl:-left-12" />
+        <CarouselNext className="right-3 hidden size-9 text-primary ring-2 ring-primary hover:scale-110 lg:flex 2xl:-right-12" />
       </Carousel>
 
       <div className="py-2.5 text-center text-sm text-muted-foreground">

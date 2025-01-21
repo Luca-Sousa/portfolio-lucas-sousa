@@ -89,3 +89,17 @@ body {
     @apply rounded-md bg-muted-foreground/25;
   }
 }
+
+/* styles.css ou seu arquivo global de estilos */
+
+.ql-container {
+  @apply rounded-b-lg ; /* Usando o Tailwind para bordas arredondadas */
+}
+
+.ql-toolbar {
+  @apply rounded-t-lg border border-input bg-background; /* Bordas e arredondamento */
+}
+
+.ql-editor {
+  @apply p-2; /* Usando padding do Tailwind */
+}

@@ -49,6 +49,8 @@ import { MultiFileDropzoneUsage } from "./MultiFileDropzoneUsage";
 import { toast } from "sonner";
 import { ptBR } from "date-fns/locale";
 import { SingleFilePDFDropzone } from "./single-file-pdf-dropzone";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 interface UpsertProductDialogContentProps {
   defaultValues?: UpsertProjectSchema;
@@ -340,7 +342,6 @@ const UpsertProductDialogContent = ({
                       )}
                     />
                   </div>
-
                   <FormField
                     control={form.control}
                     name="description"
@@ -348,10 +349,21 @@ const UpsertProductDialogContent = ({
                       <FormItem>
                         <FormLabel>Descrição - Projeto</FormLabel>
                         <FormControl>
-                          <Textarea
-                            {...field}
+                          <ReactQuill
+                            value={field.value || ""} // O valor vem do controle do formulário
+                            onChange={(value) => field.onChange(value)} // Atualiza o valor no formulário
                             placeholder="Descrição do Projeto..."
-                            className="min-h-40 resize-none"
+                            theme="snow"
+                            modules={{
+                              toolbar: [
+                                [{ header: [1, 2, false] }],
+                                ["bold", "italic", "underline", "strike"], // Formatação de texto
+                                [{ list: "ordered" }, { list: "bullet" }], // Listas
+                                [{ align: [] }], // Alinhamento
+                                ["link"],
+                                ["clean"], // Remove formatação
+                              ],
+                            }}
                           />
                         </FormControl>
                         <FormMessage />
@@ -376,7 +388,6 @@ const UpsertProductDialogContent = ({
                       </FormItem>
                     )}
                   />
-
                   <div className="flex gap-4">
                     <FormField
                       control={form.control}
