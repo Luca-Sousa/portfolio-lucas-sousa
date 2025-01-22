@@ -54,7 +54,7 @@ const ProjectPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
           <CardDescription
             dangerouslySetInnerHTML={{ __html: project.description }}
-            className="prose min-w-full prose-a:text-muted-foreground hover:prose-a:text-primary"
+            className="prose min-w-full leading-tight text-foreground prose-headings:text-foreground prose-a:text-foreground hover:prose-a:text-primary"
           />
 
           <Separator className="my-4" />

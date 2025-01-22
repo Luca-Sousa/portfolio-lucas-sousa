@@ -88,9 +88,10 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
         <CardTitle className="truncate text-sm font-bold text-primary">
           {project.title}
         </CardTitle>
+
         <CardDescription
           dangerouslySetInnerHTML={{ __html: project.description }}
-          className="prose-sm line-clamp-4 max-h-16 min-h-16 text-xs prose-h2:text-card-foreground"
+          className="prose-sm line-clamp-4 max-h-16 min-h-16 prose-headings:text-xs prose-headings:font-normal prose-a:pointer-events-none"
         />
       </CardHeader>
 

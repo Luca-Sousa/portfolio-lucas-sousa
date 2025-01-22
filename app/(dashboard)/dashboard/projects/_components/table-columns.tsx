@@ -87,10 +87,8 @@ export const projectsTableColumns: ColumnDef<Project>[] = [
     header: "Projeto",
     cell: ({ row: { original: project } }) => {
       return (
-        <div className="truncate text-sm">
-          {project.title.length > 20
-            ? `${project.title.slice(0, 20)}...`
-            : project.title}
+        <div className="line-clamp-1 max-w-40 truncate text-sm">
+          {project.title}
         </div>
       );
     },
@@ -100,11 +98,10 @@ export const projectsTableColumns: ColumnDef<Project>[] = [
     header: "Descrição",
     cell: ({ row: { original: project } }) => {
       return (
-        <div className="truncate text-sm">
-          {project.description.length > 30
-            ? `${project.description.slice(0, 30)}...`
-            : project.description}
-        </div>
+        <div
+          dangerouslySetInnerHTML={{ __html: project.description }}
+          className="prose-sm line-clamp-1 max-w-56 truncate text-sm prose-headings:text-xs prose-headings:!font-normal prose-a:pointer-events-none"
+        />
       );
     },
   },
@@ -161,7 +158,7 @@ export const projectsTableColumns: ColumnDef<Project>[] = [
     header: "Tecnologias",
     cell: ({ row: { original: project } }) => {
       return (
-        <div className="flex items-center gap-2 overflow-x-auto">
+        <div className="flex items-center gap-2 overflow-x-scroll [&::-webkit-scrollbar]:hidden">
           {project.technologies.map((tech) => (
             <Image
               key={tech.id}
